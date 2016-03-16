@@ -2,18 +2,27 @@
 // License: GPLv3 (see LICENSE.txt)
 // (c) 2016 Rafa Couto <caligari@treboada.net>
 
+//////////////////////////////////////////////////////////////////////
 
-var Keypad = Class.create({
-
-  init: function(id) {
-    this.id = id;
-    this._lookForButtons();
-  },
-
-  _lookForButtons: function() {
-    // ToDo
-  }
-
+$(function() {
+  console.log( "ready!" );
+  var keypad = Keypad('keypad');
+  keypad.init();
 });
 
+//////////////////////////////////////////////////////////////////////
 
+function Keypad(id) {
+  this.id = id;
+}
+
+Keypad.prototype.init = function() {
+  console.log(this.id)
+};
+
+
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+
+// vim:set ai et sw=2 tw=79:
