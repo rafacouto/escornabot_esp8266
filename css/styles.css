@@ -1,0 +1,13 @@
+/*
+// styles.css
+// License: GPLv3 (see LICENSE.txt)
+// (c) 2016 Rafa Couto <caligari@treboada.net>
+*/
+
+div.btn img {
+    width: 8em;
+}
+
+div.btn {
+    margin: 1em;
+}
