@@ -5,23 +5,29 @@
 //////////////////////////////////////////////////////////////////////
 
 $(function() {
-  console.log( "ready!" );
-  var keypad = Keypad('keypad');
-  keypad.init();
-});
+  var keypad = new Keypad('keypad');
+})
 
 //////////////////////////////////////////////////////////////////////
 
 function Keypad(id) {
-  this.id = id;
+  this.keypadId = id;
+  this._catchButtons();
 }
 
-Keypad.prototype.init = function() {
-  console.log(this.id)
-};
+Keypad.prototype = {
 
+  _catchButtons: function() {
+    $('#' + this.keypadId).find('.btn').click(function(){
+      Keypad.clickBtn($(this).attr('data-action'));
+    });
+  }
 
-//////////////////////////////////////////////////////////////////////
+}
+
+Keypad.clickBtn = function(action) {
+  console.log("click: " + action);
+}
 
 //////////////////////////////////////////////////////////////////////
 
