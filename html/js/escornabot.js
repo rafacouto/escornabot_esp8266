@@ -5,28 +5,63 @@
 //////////////////////////////////////////////////////////////////////
 
 $(function() {
-  var keypad = new Keypad('keypad');
+  var escornabot = new RemoteEscornabot();
+  escornabot.setKeypad(new Keypad('keypad'));
 })
 
 //////////////////////////////////////////////////////////////////////
 
 function Keypad(id) {
   this.keypadId = id;
+  this.listener = null;
   this._catchButtons();
 }
 
 Keypad.prototype = {
 
+  setListener: function(listener) {
+    this.listener = listener;
+  },
+
   _catchButtons: function() {
+    var ctx = this;
     $('#' + this.keypadId).find('.btn').click(function(){
-      Keypad.clickBtn($(this).attr('data-action'));
+      var action = $(this).attr('data-action');
+      if (ctx.listener) ctx.listener.onKeypadAction(action);
     });
   }
 
 }
 
-Keypad.clickBtn = function(action) {
-  console.log("click: " + action);
+//////////////////////////////////////////////////////////////////////
+
+function RemoteEscornabot() {
+  this.href = $(location).prop('href');
+  this.link();
+}
+
+RemoteEscornabot.prototype = {
+
+  link: function() {
+    $.get(this.href + '?link')
+      .done(function(data) {
+        console.log(data)
+        });
+  },
+
+  setKeypad: function(keypad) {
+    this.keypad = keypad;
+    keypad.setListener(this);
+  },
+
+  onKeypadAction(action) {
+    console.log("keypadAction: " + action);
+    $.get(this.href + '?action=' + action)
+      .done(function(data) {
+        console.log(data);
+        });
+  }
+
 }
 
 //////////////////////////////////////////////////////////////////////
